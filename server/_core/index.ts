@@ -10,6 +10,10 @@ async function startServer() {
   const app = express();
   const server = createServer(app);
   app.disable("x-powered-by");
+  app.use("/api", (_req, res, next) => {
+    res.setHeader("Cache-Control", "no-store, private");
+    next();
+  });
   app.use(express.json({ limit: "1mb" }));
   app.use(express.urlencoded({ limit: "64kb", extended: false }));
   app.get("/api/health", (_req, res) => res.status(200).json({ status: "ok" }));

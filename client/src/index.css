@@ -544,3 +544,12 @@ html.dark .role-select-label select { color: var(--ink); background: #202d3d; bo
 
 .catalog-result.keyboard-selected { border-color: #70a8e4; background: #f2f8ff; box-shadow: 0 0 0 2px #dcecff; }
 html.dark .catalog-result.keyboard-selected { border-color: #4a86c7; background: #1e3148; box-shadow: 0 0 0 2px #284361; }
+
+.pwa-install-action { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 36px; padding: 0 10px; color: var(--blue); background: #f3f8ff; border: 1px solid #dceafa; border-radius: 8px; font-size: 11px; font-weight: 600; white-space: nowrap; }
+.pwa-install-action:hover { color: var(--blue-strong); background: var(--blue-soft); border-color: #a9c9ec; }
+.pwa-install-action svg { flex: 0 0 auto; }
+.pwa-install-login { width: 100%; min-height: 42px; margin: 10px 0 8px; background: #fff; }
+@media (max-width: 700px) {
+  .pwa-install-topbar { width: 36px; min-width: 36px; padding: 0; }
+  .pwa-install-topbar .pwa-install-label { display: none; }
+}

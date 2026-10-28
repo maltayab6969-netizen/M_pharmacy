@@ -4,6 +4,7 @@ import { useLocation } from "wouter";
 import { toast } from "sonner";
 import { PharmacyApiError } from "@/lib/pharmacy-api";
 import { usePharmacyAuth } from "@/contexts/PharmacyAuthContext";
+import PwaInstallAction from "@/components/PwaInstallAction";
 
 export default function LoginPage() {
   const { user, loading, setupRequired, login } = usePharmacyAuth();
@@ -88,6 +89,7 @@ export default function LoginPage() {
               </button>
             </form>
           )}
+          <PwaInstallAction variant="login" />
           <div className="login-security-note"><ShieldCheck size={16} /><span>بيانات حسابك مشفّرة ولا تُشارك خارج نظام الصيدلية.</span></div>
         </div>
         <div className="login-footer"><span>© {new Date().getFullYear()} M Pharmacy</span><span>الدعم عبر مدير النظام</span></div>

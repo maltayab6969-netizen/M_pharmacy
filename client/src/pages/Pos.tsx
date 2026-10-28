@@ -4,6 +4,7 @@ import { useLocation } from "wouter";
 import { toast } from "sonner";
 import { api, formatCurrency, PharmacyApiError, todayUtcISO } from "@/lib/pharmacy-api";
 import type { CartLine, PosProduct } from "@/lib/pharmacy-types";
+import { getHeldCart, storeHeldCart, takeHeldCart } from "@/lib/held-cart";
 import { usePharmacyAuth } from "@/contexts/PharmacyAuthContext";
 import Modal from "@/components/Modal";
 import Receipt from "@/components/Receipt";
@@ -12,14 +13,6 @@ type Shift = { id: number; startingCash: string; status: string; startTime: stri
 type Service = { name: string; price: string; icon: string };
 type PosData = { medicines: PosProduct[]; popular: PosProduct[]; services: Service[]; shift: Shift | null };
 type Invoice = { id: number; number: string; cashier: string; shiftId: number; paymentMethod: "cash" | "card"; subtotal: string; discount: string; net: string; received: string | null; change: string; createdAt: string; items: Array<{ name: string; quantity: number; unitPrice: string; total: string; barcode?: string | null }> };
-
-function readHeldCart(): CartLine[] {
-  try {
-    const data = localStorage.getItem("m-pharmacy-held-cart");
-    const value = data ? JSON.parse(data) : [];
-    return Array.isArray(value) ? value : [];
-  } catch { return []; }
-}
 
 function productStatus(product: PosProduct) {
   if (product.expiryDate < todayUtcISO()) return { label: "منتهي", className: "expired" };
@@ -37,7 +30,7 @@ export default function PosPage() {
   const [selectedResult, setSelectedResult] = useState(0);
   const [activeTab, setActiveTab] = useState<"popular" | "all">("popular");
   const [cart, setCart] = useState<CartLine[]>([]);
-  const [heldCart, setHeldCart] = useState<CartLine[]>(readHeldCart);
+  const [heldCart, setHeldCart] = useState<CartLine[]>(() => getHeldCart(user?.id ?? -1));
   const [method, setMethod] = useState<"cash" | "card">("cash");
   const [cashReceived, setCashReceived] = useState("");
   const [discount, setDiscount] = useState("");
@@ -110,21 +103,17 @@ export default function PosPage() {
 
   const holdOrRestoreCart = () => {
     if (cart.length) {
-      try {
-        localStorage.setItem("m-pharmacy-held-cart", JSON.stringify(cart));
-        setHeldCart(cart);
-        setCart([]);
-        setDiscount("");
-        setCashReceived("");
-        toast.success("تم تعليق السلة الحالية على هذا الجهاز.");
-      } catch { toast.error("تعذر حفظ السلة المعلقة على هذا الجهاز."); }
+      setHeldCart(storeHeldCart(user?.id ?? -1, cart));
+      setCart([]);
+      setDiscount("");
+      setCashReceived("");
+      toast.success("تم تعليق السلة مؤقتًا في هذه الجلسة.");
       return;
     }
-    const saved = readHeldCart();
+    const saved = takeHeldCart(user?.id ?? -1);
     if (!saved.length) { toast.info("لا توجد سلة معلقة للاستعادة."); return; }
     setCart(saved);
     setHeldCart([]);
-    localStorage.removeItem("m-pharmacy-held-cart");
     toast.success("تمت استعادة السلة المعلقة.");
   };
 

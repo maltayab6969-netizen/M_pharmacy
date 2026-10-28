@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/sonner";
 import ErrorBoundary from "./components/ErrorBoundary";
 import PharmacyLayout from "./components/PharmacyLayout";
 import { PharmacyAuthProvider, usePharmacyAuth } from "./contexts/PharmacyAuthContext";
+import { clearHeldCart } from "./lib/held-cart";
 import LoginPage from "./pages/Login";
 import PosPage from "./pages/Pos";
 import DashboardPage from "./pages/Dashboard";
@@ -39,6 +40,10 @@ function AppRoutes() {
     else if (path === "/reports") document.title = "التقارير · M Pharmacy";
     else if (path === "/users") document.title = "المستخدمون · M Pharmacy";
   }, [path, loading, user, navigate]);
+
+  useEffect(() => {
+    if (!loading && !user) clearHeldCart();
+  }, [loading, user]);
 
   return (
     <Switch>

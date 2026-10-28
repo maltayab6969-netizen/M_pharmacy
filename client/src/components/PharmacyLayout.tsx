@@ -3,6 +3,7 @@ import { Activity, BarChart3, ChevronDown, ClipboardList, LayoutDashboard, LogOu
 import { useLocation } from "wouter";
 import { toast } from "sonner";
 import { usePharmacyAuth } from "@/contexts/PharmacyAuthContext";
+import PwaInstallAction from "@/components/PwaInstallAction";
 
 const links = [
   { href: "/", label: "نقطة البيع", Icon: Wallet, roles: ["admin", "pharmacist"] },
@@ -100,6 +101,7 @@ export default function PharmacyLayout({ title, active, children }: Props) {
           <div className="topbar-title"><span>مساحة العمل</span><b>{title}</b></div>
           <div className="topbar-actions">
             <span className="connection-indicator"><i /> النظام متصل</span>
+            <PwaInstallAction />
             <button className="icon-button theme-button" onClick={toggleTheme} title={theme === "auto" ? "الوضع تلقائي — اضغط للتبديل" : `الوضع ${theme === "dark" ? "الليلي" : "الفاتح"} — اضغط للتبديل`}>
               {(theme === "dark" || (theme === "auto" && systemDark)) ? <Sun size={18} /> : <Moon size={18} />}
             </button>

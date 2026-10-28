@@ -1,0 +1,29 @@
+{
+  "id": "/",
+  "name": "M Pharmacy · إدارة الصيدلية",
+  "short_name": "M Pharmacy",
+  "description": "مبيعات ومخزون وورديات M Pharmacy.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f4f7fb",
+  "theme_color": "#1769c2",
+  "categories": ["business", "medical"],
+  "icons": [
+    {
+      "src": "/assets/pwa-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/pwa-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
