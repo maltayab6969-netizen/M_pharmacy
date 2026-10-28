@@ -1,14 +1,30 @@
 # M Pharmacy POS
 
-React / Express / tRPC / Drizzle starter, adapted from the Sandbox web-db-user template.
+نظام صيدلية خاص بواجهة عربية RTL، ونقطة بيع سريعة، ومخزون وورديات وتقارير. هذا الإصدار مُعدّ لموقع Manus WebDev بخادم Node/Express وواجهة React/TypeScript وTailwind CSS وقاعدة MySQL مدارة عبر Drizzle. هو ترحيل متكامل للنظام التشغيلي السابق، وليس تشغيل PHP/XAMPP مباشرة.
 
-- `pnpm dev`: development server; honors `PORT` (default 3000).
-- `pnpm build` / `pnpm start`: build and serve `dist/index.js` and `dist/public/`.
-- `pnpm db:migrate`: apply checked-in migrations. `pnpm db:push`: generate and apply new schema changes.
-- `pnpm check` / `pnpm test`: types and application tests.
+## الأوامر
 
-Start with the Webdev skill's default-template guide. Platform login, storage, payments and service contracts live in its shared references; read the relevant capability before extending its helper.
+- `pnpm dev`: تشغيل معاينة التطوير على `PORT` أو `3000`.
+- `pnpm check`: فحص TypeScript.
+- `pnpm test`: تشغيل اختبارات قواعد المال والتاريخ والخدمات.
+- `pnpm build`: بناء واجهة الإنتاج وخادمها.
+- `pnpm start`: تطبيق ترحيلات Drizzle ثم تشغيل خادم الإنتاج.
+- `pnpm db:migrate`: تطبيق الترحيلات يدويًا؛ لا تستخدم قاعدة الإنتاج للاختبار أو لإعادة ضبط البيانات.
 
-`server/_core/publicConfig.ts` exposes only named public runtime values. Private keys stay server-side. The platform serves managed `/manus-storage/` assets; the application does not register a second proxy.
+تتطلب بيئة التشغيل قاعدة MySQL عبر `DATABASE_URL`. يُستخدم `PHARMACY_INITIAL_ADMIN_PASSWORD` لتهيئة حساب `admin` الأول فقط عندما لا يوجد حساب صيدلية. يجب أن تكون كلمة المرور 12 محرفًا على الأقل، وتُخزّن بصيغة بصمة `scrypt`. تُدخل عبر بطاقة Secrets المحمية؛ لا تضعها في الملفات أو Git أو الرسائل. بعد إنشاء المدير، لا يعيد التطبيق استخدام قيمة التهيئة.
 
-Platform configuration is readable and editable through `webdev.config`. Default settings are initial values, not enforced constraints. The agent may modify the files, commands and configuration or follow the flexible guide for another stack.
+لا يوجد تسجيل عام أو حساب افتراضي. بعد التهيئة تُدار حسابات الفريق من شاشة المستخدمين. تُفرض صلاحيات المدير والصيدلي في API على الخادم، وتحمل طلبات التعديل حماية CSRF. تخزن الجلسات في قاعدة البيانات ولا تُحفظ بيانات الدخول في المتصفح. خيار «تذكرني» يمدد الجلسة إلى 30 يومًا؛ الجلسة الاعتيادية 12 ساعة.
+
+## البيانات والأمان
+
+تشمل قاعدة البيانات المستخدمين والأدوية والتصنيفات والفواتير والورديات وسجل التدقيق. بيانات MySQL المدارة تبقى بعد إعادة تشغيل الخادم. لا يستورد التطبيق تلقائيًا بيانات الاختبار أو سجلات XAMPP المحلية؛ أي ترحيل فعلي يحتاج مصدرًا وموافقة منفصلة.
+
+يمنع الخادم بيع الدواء المنتهي أو الكمية غير المتاحة، ويعيد قراءة السعر والمخزون والصلاحية من قاعدة البيانات ضمن معاملة. يتحقق من أن إجمالي البيع والتسوية لا يتجاوز سعة `DECIMAL(10,2)` في قاعدة البيانات. تحفظ الفاتورة لقطة من اسم الصنف والباركود والسعر والتكلفة، ويمنع مفتاح idempotency تكرار الفاتورة ويربط الاستجابة بحساب منشئها. بعد إغلاق الوردية يستطيع المدير تنزيل نسخة SQL مضغوطة وحفظها خارج التطبيق. النسخة لا تتضمن جلسات الدخول، لكنها تتضمن بيانات الحسابات وبصمات كلمات المرور اللازمة للاستعادة؛ لذلك تعامل معها كبيانات حساسة.
+
+تُسلسل عمليات إنشاء/تعديل أدوار المديرين وتعطيلهم عبر قفل قاعدة بيانات مشترك كي لا تترك طلبات متزامنة النظام بلا مدير. تفرض APIs قيود الأدوار على الخادم، بما فيها تصدير CSV وأسعار الشراء، ولا يكتفي التطبيق بإخفاء الأزرار.
+
+## الاستضافة
+
+- المعاينة للمراجعة وليست نشرًا عامًا. النشر التلقائي غير مفعّل؛ لا يُنشر الموقع للعامة حتى يراجع المالك المعاينة ويوافق صراحةً.
+- استضافة Autoscale تحفظ قاعدة MySQL المدارة، لكن الخادم قد يدخل في سبات ثم يستيقظ عند الطلب؛ لا يوجد ضمان لتشغيل ساخن مستمر 24/7.
+- تحمل صفحات النظام توجيهًا لمنع الفهرسة، وهذا لا يغني عن المصادقة.

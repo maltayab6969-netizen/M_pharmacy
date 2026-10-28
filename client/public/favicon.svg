@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="title desc">
+  <title id="title">M Pharmacy</title>
+  <desc id="desc">Luxury emerald M monogram with a Hygieia bowl and serpent inside a faceted diamond frame.</desc>
+  <defs>
+    <linearGradient id="emerald" x1="26" y1="40" x2="165" y2="158" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#54e0bd"/>
+      <stop offset=".52" stop-color="#16ad91"/>
+      <stop offset="1" stop-color="#087a70"/>
+    </linearGradient>
+    <linearGradient id="bronze" x1="20" y1="20" x2="183" y2="180" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f4d99b"/>
+      <stop offset=".48" stop-color="#bd9451"/>
+      <stop offset="1" stop-color="#f2d99c"/>
+    </linearGradient>
+    <linearGradient id="facet" x1="54" y1="29" x2="151" y2="172" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#a9f4df" stop-opacity=".82"/>
+      <stop offset="1" stop-color="#23bfa0" stop-opacity=".12"/>
+    </linearGradient>
+  </defs>
+  <path d="M100 7 165 37 193 100 100 193 7 100 35 37 100 7Z" fill="#092638" fill-opacity=".18" stroke="url(#bronze)" stroke-width="2.6" stroke-linejoin="round"/>
+  <path d="m35 37 65 21 65-21M7 100l48-10m138 10-48-10M35 163l36-27 29 22 29-22 36 27M55 90l16 46m58-46-16 46M100 58v100" fill="none" stroke="url(#facet)" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M38 139V70l31 43 31-48 31 48 31-43v69" fill="none" stroke="url(#emerald)" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M69 142c7 10 18 14 31 14s24-4 31-14" fill="none" stroke="url(#bronze)" stroke-width="4.2" stroke-linecap="round"/>
+  <path d="M76 143c3 9 10 14 24 14s21-5 24-14" fill="none" stroke="url(#bronze)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M100 151c-1-11-8-13-13-20-7-10-3-20 7-23 9-3 17 3 16 11-1 6-6 9-11 8-4-1-6-5-5-8" fill="none" stroke="url(#bronze)" stroke-width="4" stroke-linecap="round"/>
+  <path d="M108 105c4-5 10-7 15-5-2 5-6 8-12 8m10-8 4-4m-4 4 4 4" fill="none" stroke="url(#bronze)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="100" cy="157" r="2.6" fill="#f0d396"/>
+  <path d="m100 16 7 14-7 8-7-8 7-14Zm-81 84 13-7 8 7-8 7-13-7Zm162 0 13 7-13 7-8-7 8-7Zm-81 67 7 7-7 12-7-12 7-7Z" fill="url(#bronze)" fill-opacity=".78"/>
+</svg>
