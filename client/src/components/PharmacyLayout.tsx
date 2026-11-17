@@ -1,18 +1,19 @@
 import { useEffect, useState, type ReactNode } from "react";
-import { Activity, BarChart3, ChevronDown, ClipboardList, LayoutDashboard, LogOut, Menu, Moon, PackageSearch, Pill, Search, Settings2, ShieldCheck, Sun, Users, Wallet, X } from "lucide-react";
+import { Activity, BarChart3, ChevronDown, ClipboardList, LayoutDashboard, LogOut, Menu, Moon, MoreHorizontal, PackageSearch, Pill, Search, Settings2, ShieldCheck, Sun, Users, Wallet, X } from "lucide-react";
 import { useLocation } from "wouter";
 import { toast } from "sonner";
 import { usePharmacyAuth } from "@/contexts/PharmacyAuthContext";
 import PwaInstallAction from "@/components/PwaInstallAction";
 
 const links = [
-  { href: "/", label: "نقطة البيع", Icon: Wallet, roles: ["admin", "pharmacist"] },
-  { href: "/inventory", label: "المخزون والأدوية", Icon: PackageSearch, roles: ["admin", "pharmacist"] },
-  { href: "/shifts", label: "الورديات", Icon: Activity, roles: ["admin", "pharmacist"] },
-  { href: "/dashboard", label: "لوحة المؤشرات", Icon: LayoutDashboard, roles: ["admin"] },
-  { href: "/reports", label: "التقارير", Icon: BarChart3, roles: ["admin"] },
-  { href: "/users", label: "المستخدمون", Icon: Users, roles: ["admin"] },
+  { href: "/", label: "نقطة البيع", mobileLabel: "البيع", Icon: Wallet, roles: ["admin", "pharmacist"] },
+  { href: "/inventory", label: "المخزون والأدوية", mobileLabel: "المخزون", Icon: PackageSearch, roles: ["admin", "pharmacist"] },
+  { href: "/shifts", label: "الورديات", mobileLabel: "الورديات", Icon: Activity, roles: ["admin", "pharmacist"] },
+  { href: "/dashboard", label: "لوحة المؤشرات", mobileLabel: "المؤشرات", Icon: LayoutDashboard, roles: ["admin"] },
+  { href: "/reports", label: "التقارير", mobileLabel: "التقارير", Icon: BarChart3, roles: ["admin"] },
+  { href: "/users", label: "المستخدمون", mobileLabel: "المستخدمون", Icon: Users, roles: ["admin"] },
 ];
+const mobilePrimaryHrefs = new Set(["/", "/inventory", "/shifts"]);
 
 type Props = { title: string; active: string; children: ReactNode };
 
@@ -59,11 +60,14 @@ export default function PharmacyLayout({ title, active, children }: Props) {
   };
 
   const visibleLinks = links.filter(link => link.roles.includes(user?.role ?? "pharmacist"));
+  const mobileLinks = visibleLinks.filter(link => mobilePrimaryHrefs.has(link.href));
+  const hasMoreMobileLinks = visibleLinks.some(link => !mobilePrimaryHrefs.has(link.href));
+  const moreMobileActive = mobileOpen || !mobilePrimaryHrefs.has(active);
 
   return (
     <div className={`app-shell ${collapsed ? "sidebar-collapsed" : ""}`}>
       {mobileOpen && <button className="mobile-scrim" aria-label="إغلاق القائمة" onClick={() => setMobileOpen(false)} />}
-      <aside className={`app-sidebar ${mobileOpen ? "mobile-open" : ""}`}>
+      <aside id="pharmacy-sidebar" className={`app-sidebar ${mobileOpen ? "mobile-open" : ""}`}>
         <div className="sidebar-brand">
           <img src="/assets/logo.svg" alt="M Pharmacy" />
           <div className="brand-label"><strong>M Pharmacy</strong><span>نظام الصيدلية</span></div>
@@ -79,6 +83,7 @@ export default function PharmacyLayout({ title, active, children }: Props) {
             <button
               key={href}
               className={`nav-link ${active === href ? "active" : ""}`}
+              aria-current={active === href ? "page" : undefined}
               title={collapsed ? label : undefined}
               onClick={() => { navigate(href); setMobileOpen(false); }}
             >
@@ -114,6 +119,34 @@ export default function PharmacyLayout({ title, active, children }: Props) {
         </main>
         <footer className="app-footer"><span>© {new Date().getFullYear()} M Pharmacy</span><span>رعاية أسرع · تشغيل أوضح</span></footer>
       </div>
+
+      <nav className="mobile-bottom-nav" aria-label="التنقل السريع">
+        {mobileLinks.map(({ href, mobileLabel, Icon }) => (
+          <button
+            key={href}
+            type="button"
+            className={`mobile-nav-link ${active === href ? "active" : ""}`}
+            aria-current={active === href ? "page" : undefined}
+            onClick={() => { navigate(href); setMobileOpen(false); }}
+          >
+            <Icon size={19} strokeWidth={1.9} />
+            <span>{mobileLabel}</span>
+          </button>
+        ))}
+        {hasMoreMobileLinks && (
+          <button
+            type="button"
+            className={`mobile-nav-link ${moreMobileActive ? "active" : ""}`}
+            aria-label="المزيد من الصفحات"
+            aria-expanded={mobileOpen}
+            aria-controls="pharmacy-sidebar"
+            onClick={() => setMobileOpen(true)}
+          >
+            <MoreHorizontal size={20} strokeWidth={2} />
+            <span>المزيد</span>
+          </button>
+        )}
+      </nav>
     </div>
   );
 }
