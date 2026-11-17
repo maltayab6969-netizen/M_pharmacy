@@ -44,7 +44,7 @@ export default function LoginPage() {
   return (
     <main className="login-page" dir="rtl">
       <section className="login-brand-panel">
-        <div className="login-brand-top"><img src="/assets/logo.svg" alt="شعار M Pharmacy" /><span>M PHARMACY</span></div>
+        <div className="login-brand-top"><img src="/assets/pharmacy-app-icon-512.png?v=20261117-2" alt="شعار M Pharmacy" /><span>M PHARMACY</span></div>
         <div className="brand-visual" aria-hidden="true">
           <span className="visual-orbit orbit-one" /><span className="visual-orbit orbit-two" />
           <span className="visual-cross"><i /><b /></span>
@@ -60,7 +60,7 @@ export default function LoginPage() {
       </section>
 
       <section className="login-form-panel">
-        <div className="login-mobile-brand"><img src="/assets/logo.svg" alt="M Pharmacy" /><strong>M Pharmacy</strong></div>
+        <div className="login-mobile-brand"><img src="/assets/pharmacy-app-icon-512.png?v=20261117-2" alt="M Pharmacy" /><strong>M Pharmacy</strong></div>
         <div className="login-card">
           <div className="login-card-icon"><LockKeyhole size={20} /></div>
           <span className="eyebrow">الدخول إلى مساحة العمل</span>

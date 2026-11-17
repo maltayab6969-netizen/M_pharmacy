@@ -14,7 +14,7 @@ import ReportsPage from "./pages/Reports";
 import UsersPage from "./pages/Users";
 
 function LoadingScreen() {
-  return <div className="loading-screen" dir="rtl"><img src="/assets/logo.svg" alt="" /><span className="loading-mark" /><p>جارٍ فتح مساحة العمل…</p></div>;
+  return <div className="loading-screen" dir="rtl"><img src="/assets/pharmacy-app-icon-512.png?v=20261117-2" alt="" /><span className="loading-mark" /><p>جارٍ فتح مساحة العمل…</p></div>;
 }
 
 function Guard({ children, admin = false }: { children: React.ReactNode; admin?: boolean }) {
@@ -54,7 +54,7 @@ function AppRoutes() {
       <Route path="/shifts"><Guard><PharmacyLayout title="الورديات" active="/shifts"><ShiftsPage /></PharmacyLayout></Guard></Route>
       <Route path="/reports"><Guard admin><PharmacyLayout title="التقارير المالية" active="/reports"><ReportsPage /></PharmacyLayout></Guard></Route>
       <Route path="/users"><Guard admin><PharmacyLayout title="إدارة المستخدمين" active="/users"><UsersPage /></PharmacyLayout></Guard></Route>
-      <Route><div className="not-found" dir="rtl"><img src="/assets/logo.svg" alt="M Pharmacy" /><h1>هذه الصفحة غير متاحة</h1><p>تحقق من الرابط أو ارجع إلى نقطة البيع.</p><button className="button-primary" onClick={() => navigate(user ? "/" : "/login")}>العودة إلى مساحة العمل</button></div></Route>
+      <Route><div className="not-found" dir="rtl"><img src="/assets/pharmacy-app-icon-512.png?v=20261117-2" alt="M Pharmacy" /><h1>هذه الصفحة غير متاحة</h1><p>تحقق من الرابط أو ارجع إلى نقطة البيع.</p><button className="button-primary" onClick={() => navigate(user ? "/" : "/login")}>العودة إلى مساحة العمل</button></div></Route>
     </Switch>
   );
 }

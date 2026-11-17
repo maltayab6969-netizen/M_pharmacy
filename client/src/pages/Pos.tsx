@@ -210,7 +210,7 @@ export default function PosPage() {
   return (
     <div className="pos-page" dir="rtl">
       <header className="pos-heading">
-        <div className="pos-heading-main"><img className="pos-heading-logo" src="/assets/logo.svg" alt="M Pharmacy" /><div><h1>نقطة البيع</h1><p>{data?.shift ? `الوردية #${data.shift.id} · بدأت ${new Intl.DateTimeFormat("ar", { hour: "2-digit", minute: "2-digit" }).format(new Date(data.shift.startTime))}` : "ابدأ ورديتك لتسجيل المبيعات"}</p></div></div>
+        <div className="pos-heading-main"><img className="pos-heading-logo" src="/assets/pharmacy-app-icon-512.png?v=20261117-2" alt="M Pharmacy" /><div><h1>نقطة البيع</h1><p>{data?.shift ? `الوردية #${data.shift.id} · بدأت ${new Intl.DateTimeFormat("ar", { hour: "2-digit", minute: "2-digit" }).format(new Date(data.shift.startTime))}` : "ابدأ ورديتك لتسجيل المبيعات"}</p></div></div>
         <div className="pos-hotkeys" aria-label="اختصارات لوحة المفاتيح">
           <button className="hotkey-chip" onClick={() => searchRef.current?.focus()}><kbd>F2</kbd><Search size={13} />بحث</button>
           <button className="hotkey-chip" onClick={holdOrRestoreCart}><kbd>F4</kbd><span>{cart.length ? "تعليق" : heldCart.length ? "استعادة" : "تعليق"}</span></button>

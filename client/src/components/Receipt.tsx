@@ -31,7 +31,7 @@ export default function Receipt({ invoice, onClose }: Props) {
   return (
     <Modal title="الفاتورة جاهزة" description={`رقم الفاتورة ${invoice.number}`} onClose={onClose} labelledBy="receipt-title">
       <article className="printable-receipt" dir="rtl">
-        <header className="receipt-brand"><img src="/assets/logo.svg" alt="M" /><strong>M Pharmacy</strong><small>إيصال بيع</small></header>
+        <header className="receipt-brand"><img src="/assets/pharmacy-app-icon-512.png?v=20261117-2" alt="M" /><strong>M Pharmacy</strong><small>إيصال بيع</small></header>
         <div className="receipt-meta">
           <div><span>رقم الفاتورة</span><b>{invoice.number}</b></div>
           <div><span>التاريخ</span><b>{date}</b></div>

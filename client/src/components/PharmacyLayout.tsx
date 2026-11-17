@@ -69,7 +69,7 @@ export default function PharmacyLayout({ title, active, children }: Props) {
       {mobileOpen && <button className="mobile-scrim" aria-label="إغلاق القائمة" onClick={() => setMobileOpen(false)} />}
       <aside id="pharmacy-sidebar" className={`app-sidebar ${mobileOpen ? "mobile-open" : ""}`}>
         <div className="sidebar-brand">
-          <img src="/assets/logo.svg" alt="M Pharmacy" />
+          <img src="/assets/pharmacy-app-icon-512.png?v=20261117-2" alt="M Pharmacy" />
           <div className="brand-label"><strong>M Pharmacy</strong><span>نظام الصيدلية</span></div>
           <button className="sidebar-collapse" title={collapsed ? "توسيع القائمة" : "طي القائمة"} onClick={toggleSidebar}>
             <ChevronDown size={16} />
